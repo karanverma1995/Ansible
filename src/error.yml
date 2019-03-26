@@ -1,0 +1,18 @@
+- hosts:
+  ignore_errors: true
+  force_handlers: yes
+  vars_propmpt:
+     - name: pkg
+       prompt: Enter the package
+       private: no
+  tasks:
+  - shell: rpm -qa {{ pkg }}
+    register: pkg_stat
+  - block:
+    - debug:
+       msg: Verifying the package
+       failed_when: pkg not in pkg_stat.stdout
+    rescue:
+    - yum:
+       name: "{{ pkg }}"
+       state: present

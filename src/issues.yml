@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  tasks:
+   - name: Creating issues file
+     copy:
+       content: "{{ content }}"
+       dest:  /etc/issue

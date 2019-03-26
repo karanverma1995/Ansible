@@ -1,0 +1,5 @@
+---
+# tasks file for ansible.shards
+- import_tasks: install.yml
+- import_tasks: selinux.yml
+- import_tasks: shards.yml

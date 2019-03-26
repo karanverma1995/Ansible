@@ -1,0 +1,1 @@
+mongos --configdb "replconfig01/{{ groups['mongocconfigsvr'] | map('extract', hostvars, ['inventory_hostname']) | join(':27017,')}}:27017" --fork --syslog --bind_ip {{ ansible_ip }}

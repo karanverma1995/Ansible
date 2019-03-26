@@ -1,0 +1,31 @@
+- hosts: cassandra-cluster
+  vars:
+    - main_nodes_ips: "{{ groups['cassandra-cluster'] | map('extract', hostvars, ['ansible_enp0s8', 'ipv4','address']) | join(',') }}"
+  tasks:
+  - name: Add repository
+    yum_repository:
+      name: cassandra
+      description: Cassandra Repository
+      baseurl: "https://www.apache.org/dist/cassandra/redhat/311x/"
+      gpgkey: "https://www.apache.org/dist/cassandra/KEYS"
+      enabled: yes
+      gpgcheck: yes
+  - name: Installing Packages
+    package:
+      name: java-1.8.0-openjdk,cassandra
+      state: present
+  - name: Template cassandra.yaml
+    template:
+     src: /etc/ansible/ansible/roles/ansible.cassandra/templates/cassandra.yaml.j2
+     dest: /etc/cassandra/conf/cassandra.yaml
+     owner: root
+     group: root
+     mode: 0644 
+
+  - name: systemctl daemon-reload
+    command: systemctl daemon-reload
+
+  - name: start cassandra
+    service:
+      name: cassandra
+      state: started 

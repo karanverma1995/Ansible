@@ -1,0 +1,7 @@
+- hosts:
+  tasks:
+  - debug:
+     msg: "{{ item.name }}"
+    loop:
+     - { name: u1, empid: 101 }
+     - { name: u2, empid: 232 }

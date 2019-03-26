@@ -1,0 +1,9 @@
+rs.initiate(
+  {
+    _id: "replconfig01",
+    configsvr: true,
+    members: [
+      {% for host in groups['mongoconfigsvr'] %}{ _id : {{ loop.index }}, host : "{{ hostvars[host]['inventory_hostname'] }}:27017" }{% if not loop.last %},{% endif %}{% endfor %}
+    ]
+  }
+)

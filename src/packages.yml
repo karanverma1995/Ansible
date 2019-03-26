@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+  - name: Installing Packages
+    package:
+      name: php,mariadb-server
+      state: present
+
+- hosts: dev
+  tasks:
+  - name: Installing packages in dev group
+    package:
+      name: '@Development Tools'
+      state: present
+  - name: Updating All Packages to latest version 
+    package:
+      name: "*"
+      state: latest
+
+

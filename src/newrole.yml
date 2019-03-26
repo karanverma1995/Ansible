@@ -1,0 +1,10 @@
+---
+- hosts: webservers
+  roles:
+    - apache
+  post_tasks:
+    - name: Restart Firewall
+      service:
+        name: firewalld
+        state: restarted
+...

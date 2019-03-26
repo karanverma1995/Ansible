@@ -1,0 +1,49 @@
+---
+- hosts: dev
+  tasks:
+  - name: Installing httpd and enabling service
+    package:
+      name: epel-release,firewalld,httpd,php-mysql
+      state: present
+  - name: Starting and enabling Service Firewall and httpd
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+     - 'firewalld'
+     - 'httpd'
+  - name: Enabling http ports in firewall
+    firewalld:
+      service: "{{ item }}"
+      permanent: yes
+      state: enabled
+    with_items:
+     - 'http'
+     - 'https'
+  - name: Restarting Firewalld
+    service:
+      name: firewalld
+      state: restarted
+  - name: Creating webdev group
+    group:
+      name: webdev
+      state: present
+      gid: 123
+  - name: Creating webdev directory
+    file:
+      path: /webdev
+      state: directory
+      group: webdev
+      mode: 0775
+  - name: Creating Index File
+    copy:
+     content: "<h1> Development </h1>"
+     dest:  /webdev/index.html
+  - name: Create symbolic link
+    file:
+      src: /webdev
+      dest: /var/www/html/webdev
+      state: link
+
+...

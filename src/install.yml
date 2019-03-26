@@ -1,0 +1,48 @@
+---
+- hosts: all
+  tasks:
+  - name: Installing Packages
+    package:
+      name: epel-release,firewalld,httpd,php, php-mysql,mariadb-server
+      state: present
+  - name: Starting and enabling Service Firewall and httpd
+    service:
+      name: "{{ item }}"
+      enabled: yes
+      state: started
+    with_items:
+     - 'firewalld'
+     - 'httpd'
+     - 'mariadb'
+  - name: Enabling http ports in firewall
+    firewalld:
+      service: "{{ item }}"  
+      permanent: yes
+      state: enabled
+    with_items:
+     - 'http'
+     - 'https'
+  - name: Restarting Firewalld
+    service:
+      name: firewalld
+      state: restarted
+  - name: Adding Content To index page
+    copy:
+      content: "<h1> Example web content </h1>"
+      dest:  /var/www/html/index.html
+
+- name: playlevel2
+  hosts: all
+  tasks:
+   - name: Testing the webpage
+     uri:
+      url: http://{{ ansible_hostname }}
+      return_content: yes      
+     delegate_to: localhost
+     register: webpage
+ 
+   - name: view the webpage
+     debug:
+      msg: "{{ webpage.status }}"
+
+...

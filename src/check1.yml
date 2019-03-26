@@ -1,0 +1,17 @@
+- hosts: all
+  tasks:
+  - name: "Build hosts file"
+    lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_ip }} {{item}}" state=present
+    with_items: "{{ groups.all }}"
+
+- hosts: mongoc
+  roles:
+    - ansible.mongodb
+
+- hosts: mongoshard
+  roles:
+    - ansible.shards
+
+- hosts: mongos
+  roles:
+    - ansible.mongoserver

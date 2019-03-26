@@ -1,0 +1,11 @@
+--- 
+ - name: "add"
+   hosts: localhost
+   tasks:
+   - add_host:
+      name: node3
+    
+   - copy:
+      dest: /tmp/index.html
+      content: "Ansible"
+... 

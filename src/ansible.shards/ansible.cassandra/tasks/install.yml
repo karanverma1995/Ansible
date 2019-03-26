@@ -1,0 +1,5 @@
+- name: Installing Packages
+  package:
+    name: java-1.8.0-openjdk,cassandra
+    state: present
+

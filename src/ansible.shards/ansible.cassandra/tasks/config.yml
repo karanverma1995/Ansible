@@ -1,0 +1,10 @@
+- name: Template cassandra.yaml
+  template:
+    src: /etc/ansible/ansible/roles/ansible.cassandra/templates/cassandra.yaml.j2
+    dest: /etc/cassandra/conf/cassandra.yaml
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - Daemon-Reload
+    - Starting Cassandra 

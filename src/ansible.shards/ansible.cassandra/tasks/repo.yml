@@ -1,0 +1,9 @@
+- name: Add repository
+  yum_repository:
+     name: cassandra
+     description: Cassandra Repository
+     baseurl: "https://www.apache.org/dist/cassandra/redhat/311x/"
+     gpgkey: "https://www.apache.org/dist/cassandra/KEYS"
+     enabled: yes
+     gpgcheck: yes
+

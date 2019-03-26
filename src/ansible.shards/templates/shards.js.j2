@@ -1,0 +1,9 @@
+rs.initiate(
+  {
+    _id: "shardreplica1",
+    members: [
+      {% for host in groups['mongoshardsvr'] %}{ _id : {{ loop.index }}, host : "{{ hostvars[host]['inventory_hostname'] }}:27017" }{% if not loop.last %},{% endif %}{% endfor %}
+    ]
+  }
+)
+

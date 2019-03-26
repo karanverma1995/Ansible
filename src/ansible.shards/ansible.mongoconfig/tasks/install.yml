@@ -1,0 +1,14 @@
+- name: Setting Up yum repository for mongodb
+  yum_repository:
+     name: mongodb-org-4.0
+     description: MongoDB Repository
+     baseurl: "https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.0/x86_64/"
+     gpgkey: "https://www.mongodb.org/static/pgp/server-4.0.asc"
+     enabled: yes
+     gpgcheck: yes
+- name: Installing Mongodb
+  package:
+   name: mongodb-org
+   state: present
+
+  

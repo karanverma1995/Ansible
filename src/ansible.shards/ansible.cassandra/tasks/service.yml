@@ -1,0 +1,9 @@
+- name: Daemon-Reload
+  command: systemctl daemon-reload
+
+- name: Starting Cassandra Service
+  service:
+    name: cassandra
+    state: started
+    enabled: yes
+

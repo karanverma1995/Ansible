@@ -1,0 +1,30 @@
+---
+# tasks file for apache
+- name: Installing apache
+  package:
+    name: "{{ package_name }}"
+    state: present
+- name: Enabling Service httpd
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop:
+   - httpd
+   - firewalld
+- name: Enabling Firewall Ports
+  firewalld:
+      service: "{{ item }}"
+      permanent: yes
+      state: enabled
+  with_items:
+    - 'http'
+    - 'https'
+- name: Web Page Content
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: wheel
+    mode: 0755
+ 

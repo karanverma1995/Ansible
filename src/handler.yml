@@ -1,0 +1,28 @@
+- hosts: localhost
+  tasks:
+  - yum:
+     name: nfs-utils
+     state: started
+  - service:
+     name: {{ item }}
+     state: started
+     enabled: true
+    loop:
+      - nfs-server
+      - firewalld
+  - firewalld:
+     service: nfs-server
+     state: enabled
+     immediate: true
+  - file:
+     path: /etc/exports
+     state: directory
+  - linefile:
+     dest: /ets/exports
+     line: "ettdd"
+     notify: restart_service
+  handlers:
+   - name: restart_service
+     service:
+       name: nfs-server
+       state: started

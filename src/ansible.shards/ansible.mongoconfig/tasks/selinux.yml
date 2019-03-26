@@ -1,0 +1,7 @@
+- name: Installing package to diasble selinux
+  package:
+   name: libselinux-python
+   state: present
+- name: Disabling Selinux
+  selinux:
+   state: disabled

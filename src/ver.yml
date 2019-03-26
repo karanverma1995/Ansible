@@ -1,0 +1,1 @@
+test: "{{ groups['mongoc'] | map('extract', hostvars, ['inventory_hostname']) | join(':27107,') }}:27017"

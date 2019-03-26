@@ -1,0 +1,2 @@
+main_nodes_ips: "{{ groups['mongoc'] | map('extract', hostvars, ['ansible_hostname']) |list }}"
+

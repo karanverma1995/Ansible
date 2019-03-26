@@ -1,0 +1,8 @@
+- hosts: all
+  vars_files:
+    - ver.yml
+  tasks:
+  - name: check
+    debug:
+      msg: "{{ test }}"
+  

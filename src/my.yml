@@ -1,0 +1,9 @@
+--- 
+- hosts: cassandra-cluster
+  vars:
+    - main_nodes_ips: "{{ groups['cassandra-cluster'] | map('extract', hostvars, ['ansible_enp0s8', 'ipv4','address']) | join(',') }}"
+  tasks:
+  - name: testing
+    debug:
+     msg: "{{ main_nodes_ips }}"
+

@@ -1,0 +1,5 @@
+---
+# tasks file for ansible.mongodb
+- import_tasks: install.yml
+- import_tasks: selinux.yml
+- import_tasks: configserver.yml

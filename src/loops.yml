@@ -1,0 +1,10 @@
+---
+
+- hosts: node1
+  tasks:
+  - debug:
+     msg: "{{ item }}"
+    loop:
+      - redhat
+      - fedora
+      - ubuntu

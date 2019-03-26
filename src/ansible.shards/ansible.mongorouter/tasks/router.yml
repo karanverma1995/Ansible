@@ -1,0 +1,31 @@
+- name: Stoping Mongodb
+  service:
+   name: mongod
+   enabled: yes
+   state: stopped
+
+- name: Copying script to host
+  template:
+    src: mongoconfig.sh.j2
+    dest: /tmp/mongoconfig.sh
+    mode: 0777
+
+- name: Running Script For configdb
+  shell: /tmp/mongoconfig.sh >> mongo.txt
+  when: "{{inventory_hostname == groups['mongos'][0]}}"
+
+- name: Copying javascript for adding shards to Query Router
+  template:
+    src: addshards.js.j2
+    dest: /tmp/addshards.js
+    mode: 0777
+
+- name: Adding Shards 
+  shell: mongo /tmp/addshards.js --host {{ ansible_hostname }} --port {{ mongodb_port }}
+  when: inventory_hostname == groups['mongos'][0]
+    
+
+
+
+
+

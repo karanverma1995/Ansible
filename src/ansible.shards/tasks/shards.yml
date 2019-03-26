@@ -1,0 +1,34 @@
+- name: Stoping Mongodb
+  service:
+   name: mongod
+   enabled: yes
+   state: stopped
+
+- name: Configuring mongod.conf
+  template:
+    src: mongos.conf.j2
+    dest: /etc/mongod.conf
+    group: root
+    owner: root
+    mode: 0644
+  notify:
+   - starting mongodb 
+
+- name: Creating File for intiation of replicaset with all configsvr member
+  template:
+    src: shards.js.j2
+    dest: /tmp/shards.js
+    group: mongod
+    owner: mongod
+    mode: 0755
+
+- name: Stoping Mongodb
+  service:
+   name: mongod
+   enabled: yes
+   state: started
+
+- name: Initiating the replica set name with all configsvr member
+  shell: mongo /tmp/shards.js --host {{ ansible_hostname }} --port {{ mongodb_port }} 
+
+

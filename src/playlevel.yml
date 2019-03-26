@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  vars_files:
+      - /home/ansible/vars.yml
+  tasks:
+  - name: "Using Var"
+    debug:
+      msg: "This Course is {{ course.os }}"
+...  

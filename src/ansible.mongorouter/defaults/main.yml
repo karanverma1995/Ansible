@@ -1,0 +1,5 @@
+---
+# defaults file for ansible.mongodb
+mongodb_port: 27017
+configsvr: "{{ groups['mongoc'] | map('extract', hostvars, ['ansible_nodename']) | join(',') }}"
+

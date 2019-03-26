@@ -1,0 +1,3 @@
+---
+# defaults file for ansible-cassandra
+main_nodes_ips: "{{ groups['cassandra-cluster'] | map('extract', hostvars, ['ansible_ip']) | join(',') }}"
